@@ -25,7 +25,7 @@ function displayAll(){
                                 arrayElement[i].style.left = value + typeValue;
                             break;
                             case "right":
-                                arrayElement[i].style.right = value + typeValue;
+                                arrayElement[i].style.right = value + typeValue;zzz
                             break;
                             case "bottom":
                                 arrayElement[i].style.bottom = value + typeValue;
