@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông báo chào năm 2026</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #dd97df, #1c2541);
+    color: #fcfcfc;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    overflow: hidden;
+  }
+
+  #message {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    max-width: 800px;
+    border-right: 2px solid #ff3030;
+    white-space: pre-wrap;
+    overflow: hidden;
+    animation: blink 0.7s infinite;
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
+
+  .fadeout {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+</style>
+</head>
+<body>
+  <div id="message"></div>
+
+<script>
+const text = "Vừa rồi là màn pháo hoa chào mừng năm 2026!\nCòn giờ thì cùng hái lộc với Thế Phương để nhận những phong bao lì xì nào ";
+const messageEl = document.getElementById("message");
+let index = 0;
+let buffer = "";
+
+// 🎤 Hàm đọc an toàn, không bị nghẹn
+function speakNow(str) {
+  if (!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel(); // hủy lời cũ
+  const utter = new SpeechSynthesisUtterance(str);
+  utter.lang = "vi-VN";
+  utter.rate = 1.25;
+  utter.pitch = 1.1;
+  speechSynthesis.speak(utter);
+}
+
+// ⌛ Debounce (chỉ đọc sau khi ngừng gõ 200ms)
+let readTimeout;
+function queueSpeak() {
+  clearTimeout(readTimeout);
+  readTimeout = setTimeout(() => {
+    speakNow(buffer);
+  }, 200);
+}
+
+// 🎹 Hiệu ứng gõ + đọc theo
+function typeEffect() {
+  if (index < text.length) {
+    const char = text[index];
+    messageEl.textContent += char;
+    buffer += char;
+    index++;
+
+    // Gọi đọc theo nhịp, tránh bị đứt
+    queueSpeak();
+
+    setTimeout(typeEffect, 55);
+  } else {
+    // Đọc phần còn lại nếu có
+    if (buffer.trim()) speakNow(buffer);
+
+    // Kết thúc: làm mờ và chuyển trang
+    setTimeout(() => {
+      messageEl.classList.add("fadeout");
+      setTimeout(() => {
+        window.location.href = "hailoc.html";
+      }, 2000);
+    }, 5000);
+  }
+}
+
+typeEffect();
+</script>
+</body>
+</html>
