@@ -15,14 +15,14 @@ var remainTime = function(year, month, date, hourn, minute, second, millisecond)
     // Trả về mili giây tính từ thời điểm hiện tại
     this.timeN = function(){
         this.dateN = new Date();
-        this.timeNumberN = this.dateN.getTime()  // +7 giờ => Giờ Việt Nam
+        this.timeNumberN = this.dateN.getTime() + 7*60*60*1000; // +7 giờ => Giờ Việt Nam
         return this.timeNumberN;
     }
 
     // Trả về mili giây tính từ tương lai
     this.timeF = function(){
         this.dateF = new Date(year, month-1, date, hourn, minute, second, millisecond);
-        this.timeNumberF = this.dateF.getTime()  // +7 giờ => Giờ Việt Nam
+        this.timeNumberF = this.dateF.getTime() + 7*60*60*1000; // +7 giờ => Giờ Việt Nam
         return this.timeNumberF;
     }
 
